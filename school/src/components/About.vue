@@ -1,11 +1,11 @@
 <template>
-  <div class="about-page">
-    <div class="about-image">
+  <div class="aboutpage">
+    <div class="aboutimage">
       <img :src="aboutImg" alt="About Us" />
     </div>
-    <div class="about-content">
-      <h1>About Us</h1>
-      <p>TicketWave is your trusted platform for discovering and buying tickets to the best events in the Netherlands. We are passionate about connecting people with unforgettable experiences.</p>
+    <div class="aboutcontent">
+      <h1>{{$t('aboutTitle')}}</h1>
+      <p>{{$t('aboutText')}}</p>
     </div>
   </div>
 </template>
@@ -21,10 +21,9 @@ export default {
 </script>
 
 <style scoped>
-.about-page {
+.aboutpage {
   max-width: 800px;
   margin: 60px auto;
-  /* Add background gradient similar to home hero */
   background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
   color: #222;
   border-radius: 16px;
@@ -35,12 +34,12 @@ export default {
   align-items: center;
   gap: 32px;
 }
-.about-image {
+.aboutimage {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.about-image img {
+.aboutimage img {
   width: 180px;
   height: 180px;
   object-fit: cover;
@@ -49,7 +48,7 @@ export default {
   border: 4px solid #f9f9f9;
   background: #eee;
 }
-.about-content {
+.aboutcontent {
   text-align: center;
   background: white;
   border-radius: 12px;
@@ -58,13 +57,13 @@ export default {
   max-width: 600px;
   margin-top: 12px;
 }
-.about-content h1 {
+.aboutcontent h1 {
   margin-bottom: 18px;
   font-size: 2.2rem;
   font-weight: bold;
   color: #203a43;
 }
-.about-content p {
+.aboutcontent p {
   font-size: 1.15rem;
   line-height: 1.7;
   color: #333;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="hero">
-      <div class="hero-content">
+      <div class="herocontent">
         <h1>{{$t('welcome')}}</h1>
         <p>{{$t('subtitle')}}</p>
         <button @click="scrollToEvents">{{$t('browse')}}</button>
@@ -9,9 +9,9 @@
     </header>
     <section class="events" id="events">
       <h2>{{$t('title')}}</h2>
-      <div class="event-list">
+      <div class="eventlist">
         <div
-          class="event-card"
+          class="eventcard"
           v-for="event in events"
           :key="event.id"
         >
