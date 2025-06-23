@@ -25,7 +25,8 @@
           <div v-if="showDropdown" class="login-dropdown">
             <router-link v-if="!isLoggedIn" to="/login" class="dropdown-item">{{$t('login')}}</router-link>
             <router-link v-if="!isLoggedIn" to="/register" class="dropdown-item">{{$t('register')}}</router-link>
-            <router-link v-if="isLoggedIn" to="/admin" class="dropdown-item">{{$t('adminPanel')}}</router-link>
+            <router-link v-if="!isLoggedIn" to="/admin" class="dropdown-item">{{$t('adminPanel')}}</router-link>
+            <router-link v-if="isLoggedIn" to="/cart" class="dropdown-item">{{$t('cartTitle')}}</router-link>
             <button v-if="isLoggedIn" class="dropdown-item" @click="logout">{{$t('logout')}}</button>
           </div>
         </li>

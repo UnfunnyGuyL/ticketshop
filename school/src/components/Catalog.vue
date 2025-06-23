@@ -97,9 +97,9 @@ export default {
         this.showCartPopup('You are not logged in!');
         return;
       }
-      // Always add 1 ticket per click, no prompt
+     
       const quantity = 1;
-      // Load current cart from backend
+     
       let cart = [];
       try {
         const res = await axios.get('http://localhost:3000/api/cart', {
@@ -117,7 +117,7 @@ export default {
       } else {
         cart.push({ ...event, id: eventId, quantity });
       }
-      // Save updated cart to backend and update UserCart
+      
       try {
         await axios.post('http://localhost:3000/api/cart', { cart }, {
           headers: { Authorization: 'Bearer ' + token }

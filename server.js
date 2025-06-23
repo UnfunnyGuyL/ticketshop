@@ -82,4 +82,56 @@ app.get('/api/events', async (req, res) => {
   res.json(rows);
 });
 
+// Place order (save to DB)
+app.post('/api/orders', authMiddleware, async (req, res) => {
+  const userId = req.user.id;
+  const username = req.user.username;
+  const { items } = req.body;
+  console.log('Order attempt:', { userId, username, items });
+  if (!Array.isArray(items) || items.length === 0) {
+    console.log('Order failed: No items in order.');
+    return res.status(400).json({ success: false, message: 'No items in order.' });
+  }
+  const db = await mysql.createConnection(dbConfig);
+  try {
+    await db.execute(
+      'INSERT INTO orders (user_id, username, order_date, items) VALUES (?, ?, NOW(), ?)', 
+      [userId, username, JSON.stringify(items)]
+    );
+    res.json({ success: true });
+  } catch (e) {
+    console.error('Order DB error:', e);
+    res.status(500).json({ success: false, message: 'Failed to save order.' });
+  } finally {
+    db.end();
+  }
+});
+
+// Admin auth middleware (simple: only allow username 'admin')
+function adminAuthMiddleware(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.sendStatus(401);
+  jwt.verify(token, 'your_jwt_secret', (err, user) => {
+    if (err || user.username !== 'admin') return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+}
+
+// Fetch all orders (admin only)
+app.get('/api/orders', adminAuthMiddleware, async (req, res) => {
+  const db = await mysql.createConnection(dbConfig);
+  const [rows] = await db.execute('SELECT * FROM orders ORDER BY order_date DESC LIMIT 50');
+  db.end();
+  // Parse items JSON for each order
+  const orders = rows.map(row => ({
+    id: row.id,
+    username: row.username,
+    date: row.order_date,
+    items: JSON.parse(row.items)
+  }));
+  res.json(orders);
+});
+
 app.listen(3000, () => console.log('API running on http://localhost:3000'));

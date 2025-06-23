@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'AdminLogin',
   data() {
@@ -21,9 +22,22 @@ export default {
     }
   },
   methods: {
-    login() {
+    async login() {
       if (this.username === 'admin' && this.password === 'admin') {
-        this.$router.push('/admin-panel');
+        try {
+          const res = await axios.post('http://localhost:3000/api/login', {
+            username: this.username,
+            password: this.password
+          });
+          if (res.data && res.data.token) {
+            localStorage.setItem('adminToken', res.data.token);
+            this.$router.push('/admin-panel');
+          } else {
+            this.error = this.$t('loginFailed');
+          }
+        } catch (e) {
+          this.error = this.$t('loginFailed');
+        }
       } else {
         this.error = this.$t('adminForbidden');
       }
