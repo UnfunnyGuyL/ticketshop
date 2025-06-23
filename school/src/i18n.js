@@ -21,6 +21,7 @@ const messages = {
       'Misuse of the platform may result in account suspension.',
       'We reserve the right to update these terms at any time.'
     ],
+    shop: 'Shop',
 },
   nl: {
     title: 'Aankomende Evenementen',
@@ -41,7 +42,8 @@ const messages = {
       'Tickets zijn niet overdraagbaar tenzij gespecificeerd.',
       'Misbruik van het platform kan leiden tot schorsing van het account.',
       'We behouden ons het recht voor deze voorwaarden op elk moment te wijzigen.'
-    ]
+    ],
+    shop: 'Winkel',
   },
 
 }

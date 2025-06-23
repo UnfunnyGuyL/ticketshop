@@ -28,15 +28,16 @@ export default {
 .tospage {
   max-width: 800px;
   margin: 60px auto;
-  background: linear-gradient(135deg, #f9f9f9 0%, #e0e7ff 100%);
-  color: #1a237e;
+  background: linear-gradient(135deg, #ede7f6 0%, #bbdefb 100%);
+  color: #4527a0;
   border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(26,35,126,0.10);
+  box-shadow: 0 4px 24px rgba(69,39,160,0.10);
   padding: 40px 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 32px;
+  border: 3px solid #7e57c2;
 }
 .tosimage {
   display: flex;
@@ -48,24 +49,25 @@ export default {
   height: 120px;
   object-fit: contain;
   border-radius: 24px;
-  background: #fff;
+  background: #ede7f6;
   box-shadow: 0 2px 12px rgba(26,35,126,0.08);
-  border: 3px solid #e0e7ff;
+  border: 3px solid #bbdefb;
 }
 .toscontent {
   text-align: center;
-  background: #fff;
+  background: #ede7f6;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(26,35,126,0.08);
+  box-shadow: 0 2px 8px rgba(126,87,194,0.08);
   padding: 32px 24px;
   max-width: 600px;
   margin-top: 12px;
+  border: 2px solid #9575cd;
 }
 .toscontent h1 {
   margin-bottom: 18px;
   font-size: 2.2rem;
   font-weight: bold;
-  color: #3949ab;
+  color: #5e35b1;
 }
 .toscontent p {
   font-size: 1.1rem;
@@ -78,7 +80,7 @@ export default {
   text-align: left;
   margin: 0 auto;
   max-width: 400px;
-  color: #283593;
+  color: #5e35b1;
   font-size: 1rem;
   padding-left: 0;
 }

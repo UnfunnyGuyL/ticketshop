@@ -19,9 +19,10 @@ html, body, #app {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--main-bg);
+  background: linear-gradient(90deg, #23272f 0%, #353a42 100%);
   padding: 15px 30px;
   color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
 }
 
 .logo {
@@ -113,11 +114,12 @@ html, body, #app {
 
 .footer {
   margin-top: 40px;
-  background: var(--footer-bg);
+  background: linear-gradient(90deg, #23272f 0%, #353a42 100%);
   color: var(--footer-color);
   text-align: center;
   padding: 20px 40px;
   font-size: 0.9rem;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.07);
 }
 
 .footerrow {
