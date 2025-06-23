@@ -21,6 +21,7 @@
           </a>
           <div v-if="showDropdown" class="login-dropdown">
             <router-link to="/login" class="dropdown-item">Login</router-link>
+            <router-link to="/register" class="dropdown-item">Register</router-link>
             <router-link to="/admin" class="dropdown-item">Admin Panel</router-link>
           </div>
         </li>
