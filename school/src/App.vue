@@ -11,9 +11,9 @@
           </a>
         </li>
         <li>
-          <a href="#cart" class="carticonlink" aria-label="Cart">
+          <router-link to="/cart" class="carticonlink" aria-label="Cart">
             <img src="https://cdn-icons-png.flaticon.com/512/34/34627.png" alt="Cart" width="36" height="36" style="filter: brightness(0) invert(1);" />
-          </a>
+          </router-link>
         </li>
         <li style="position: relative;">
           <a href="#" class="loginiconlink" aria-label="Login" @click.prevent="toggleDropdown">
