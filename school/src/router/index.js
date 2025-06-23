@@ -4,6 +4,9 @@ import About from '../components/About.vue'
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
 import Catalog from '../components/Catalog.vue'
+import Checkout from '../components/Checkout.vue'
+import AdminLogin from '../components/AdminLogin.vue'
+import AdminPanel from '../components/AdminPanel.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
@@ -18,6 +21,9 @@ const routes = [
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
   { path: '/catalog', name: 'Catalog', component: Catalog },
+  { path: '/checkout', name: 'Checkout', component: Checkout },
+  { path: '/admin', name: 'AdminLogin', component: AdminLogin },
+  { path: '/admin-panel', name: 'AdminPanel', component: AdminPanel },
 ]
 
 const router = createRouter({

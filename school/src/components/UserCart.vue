@@ -1,26 +1,26 @@
 <template>
   <div class="cart-container">
     <div v-if="showPopup" class="cart-popup">{{ popupMessage }}</div>
-    <h1>Your Shopping Cart</h1>
+    <h1>{{ $t('cartTitle') }}</h1>
     <div v-if="cart.length === 0" class="cart-empty">
-      <p>Your cart is empty.</p>
+      <p>{{ $t('cartEmpty') }}</p>
     </div>
     <div v-else>
       <table class="cart-table">
         <thead>
           <tr>
-            <th>Event</th>
-            <th>Date</th>
-            <th>Location</th>
-            <th>Quantity</th>
-            <th>Remove</th>
-            <th>Price</th>
+            <th>{{ $t('event') }}</th>
+            <th>{{ $t('date') }}</th>
+            <th>{{ $t('location') }}</th>
+            <th>{{ $t('quantity') }}</th>
+            <th>{{ $t('remove') }}</th>
+            <th>{{ $t('price') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, idx) in cart" :key="item.id">
-            <td>{{ item.title }}</td>
-            <td>{{ item.date }}</td>
+            <td>{{ $t('eventNames.' + item.title) || item.title }}</td>
+            <td>{{ item.date.split('T')[0] }}</td>
             <td>{{ item.location }}</td>
             <td>
               <button @click="decrement(idx)" :disabled="item.quantity <= 1">-</button>
@@ -28,15 +28,18 @@
               <button @click="increment(idx)">+</button>
             </td>
             <td>
-              <button @click="remove(idx)">Remove</button>
+              <button @click="remove(idx)">{{ $t('remove') }}</button>
             </td>
             <td>{{ formatPrice(item.price) }}</td>
           </tr>
         </tbody>
       </table>
       <div class="cart-total-row">
-        <span class="cart-total-label">Total:</span>
+        <span class="cart-total-label">{{$t('total')}}</span>
         <span class="cart-total-value">{{ formatPrice(totalPrice) }}</span>
+      </div>
+      <div class="cart-checkout-row">
+        <button class="cart-checkout-btn" @click="goToCheckout">{{$t('checkout')}}</button>
       </div>
     </div>
   </div>
@@ -78,8 +81,8 @@ export default {
         this.cart = localCart ? JSON.parse(localCart) : [];
       }
     },
-    showCartPopup(message) {
-      this.popupMessage = message;
+    showCartPopup(messageKey) {
+      this.popupMessage = this.$t(messageKey);
       this.showPopup = true;
       setTimeout(() => {
         this.showPopup = false;
@@ -88,19 +91,19 @@ export default {
     increment(idx) {
       this.cart[idx].quantity++;
       this.saveCart(true);
-      this.showCartPopup('Quantity increased!');
+      this.showCartPopup('cartQuantityIncreased');
     },
     decrement(idx) {
       if (this.cart[idx].quantity > 1) {
         this.cart[idx].quantity--;
         this.saveCart(true);
-        this.showCartPopup('Quantity decreased!');
+        this.showCartPopup('cartQuantityDecreased');
       }
     },
     remove(idx) {
       this.cart.splice(idx, 1);
       this.saveCart(true);
-      this.showCartPopup('Item removed from cart!');
+      this.showCartPopup('cartItemRemoved');
     },
     saveCart(immediate = false) {
       const token = localStorage.getItem('token');
@@ -125,6 +128,9 @@ export default {
       } catch (e) {
         this.cart = [];
       }
+    },
+    goToCheckout() {
+      this.$router.push('/checkout');
     }
   }
 }
@@ -221,6 +227,23 @@ export default {
   box-shadow: 0 4px 24px rgba(44,62,80,0.18);
   z-index: 2000;
   animation: fadeInOut 2s;
+}
+.cart-checkout-row {
+  margin-top: 16px;
+  text-align: right;
+}
+.cart-checkout-btn {
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.cart-checkout-btn:hover {
+  background: #388e3c;
 }
 @keyframes fadeInOut {
   0% { opacity: 0; }

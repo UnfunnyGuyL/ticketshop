@@ -11,25 +11,25 @@
     <section class="events" id="events">
       <h2>{{$t('title')}}</h2>
       <div class="catalog-list">
-        <div class="catalog-card" v-for="event in events" :key="event.id">
-          <h2>{{ event.title }}</h2>
-          <p><strong>Date:</strong> {{ event.date }}</p>
+        <div class="catalog-card" v-for="event in displayedEvents" :key="event.id">
+          <h2>{{ $t('eventNames.' + event.title) || event.title }}</h2>
+          <p><strong>{{$t('date')}}:</strong> {{ event.date.split('T')[0] }}</p>
           <div class="catalog-btn-row">
-            <button class="catalog-btn" @click="openModal(event)">Learn More</button>
-            <button class="catalog-btn" @click="addToCart(event)">Add to Cart</button>
+            <button class="catalog-btn" @click="openModal(event)">{{$t('learnmore')}}</button>
+            <button class="catalog-btn" @click="addToCart(event)">{{$t('buyticket')}}</button>
           </div>
         </div>
       </div>
       <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
         <div class="modal-content">
-          <h2>{{ selectedEvent.title }}</h2>
-          <p><strong>Date:</strong> {{ selectedEvent.date }}</p>
-          <p v-if="selectedEvent.location"><strong>Location:</strong> {{ selectedEvent.location }}</p>
-          <p v-if="selectedEvent.price"><strong>Price:</strong> {{ formatPrice(selectedEvent.price) }}</p>
+          <h2>{{ $t('eventNames.' + selectedEvent.title) || selectedEvent.title }}</h2>
+          <p><strong>{{$t('date')}}:</strong> {{ selectedEvent.date.split('T')[0] }}</p>
+          <p v-if="selectedEvent.location"><strong>{{$t('location')}}:</strong> {{ selectedEvent.location }}</p>
+          <p v-if="selectedEvent.price"><strong>{{$t('price') || 'Price'}}:</strong> {{ formatPrice(selectedEvent.price) }}</p>
           <p v-if="selectedEvent.description">{{ selectedEvent.description }}</p>
           <div class="catalog-btn-row">
-            <button class="catalog-btn" @click="addToCart(selectedEvent)">Add to Cart</button>
-            <button class="catalog-btn" style="background:#bbb; margin-left:10px;" @click="closeModal">Close</button>
+            <button class="catalog-btn" @click="addToCart(selectedEvent)">{{$t('buyticket')}}</button>
+            <button class="catalog-btn" style="background:#bbb; margin-left:10px;" @click="closeModal">{{$t('close') || 'Close'}}</button>
           </div>
         </div>
       </div>
@@ -44,16 +44,33 @@ export default {
   name: 'Home',
   data() {
     return {
-      events: [
-        { id: 1, title: 'Rock Night', date: '2025-07-01', location: 'Amsterdam', price: 29.99, description: 'Join us for a night of rock music.' },
-        { id: 2, title: 'Tech Conference', date: '2025-08-15', location: 'Rotterdam', price: 199.99, description: 'Discuss the future of technology.' },
-        { id: 3, title: 'Comedy Gala', date: '2025-09-10', location: 'Utrecht', price: 49.99, description: 'A night of laughter and fun.' }
-      ],
+      events: [],
       showModal: false,
       selectedEvent: {},
       showPopup: false,
       popupMessage: ''
     };
+  },
+  computed: {
+    displayedEvents() {
+      return this.events.slice(0, 3);
+    }
+  },
+  async mounted() {
+    const res = await axios.get('http://localhost:3000/api/events');
+    // Set prices for specific events to match Catalog.vue
+    const priceMap = {
+      'Comedy Gala': 199,
+      'Food Expo': 50,
+      'Jazz Festival': 36,
+      'Rock Night': 55,
+      'Tech Conference': 65,
+      'Winter Wonderland': 25
+    };
+    this.events = res.data.map(e => ({
+      ...e,
+      price: priceMap[e.title] !== undefined ? priceMap[e.title] : ((typeof e.price === 'number' && !isNaN(e.price)) ? e.price : (Math.floor(Math.random() * 91) + 10))
+    }));
   },
   methods: {
     scrollToEvents() {
