@@ -82,7 +82,7 @@ app.get('/api/events', async (req, res) => {
   res.json(rows);
 });
 
-// Place order (save to DB)
+
 app.post('/api/orders', authMiddleware, async (req, res) => {
   const userId = req.user.id;
   const username = req.user.username;
@@ -107,7 +107,7 @@ app.post('/api/orders', authMiddleware, async (req, res) => {
   }
 });
 
-// Admin auth middleware (simple: only allow username 'admin')
+
 function adminAuthMiddleware(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -119,12 +119,12 @@ function adminAuthMiddleware(req, res, next) {
   });
 }
 
-// Fetch all orders (admin only)
+
 app.get('/api/orders', adminAuthMiddleware, async (req, res) => {
   const db = await mysql.createConnection(dbConfig);
   const [rows] = await db.execute('SELECT * FROM orders ORDER BY order_date DESC LIMIT 50');
   db.end();
-  // Parse items JSON for each order
+
   const orders = rows.map(row => ({
     id: row.id,
     username: row.username,
