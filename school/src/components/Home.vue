@@ -16,7 +16,7 @@
           <p><strong>{{$t('date')}}:</strong> {{ event.date.split('T')[0] }}</p>
           <div class="catalog-btn-row">
             <button class="catalog-btn" @click="openModal(event)">{{$t('learnmore')}}</button>
-            <button class="catalog-btn" @click="addToCart(event)">{{$t('buyticket')}}</button>
+            <button class="catalog-btn" @click="addToCart(event)">{{$t('addToCart')}}</button>
           </div>
         </div>
       </div>
@@ -28,7 +28,7 @@
           <p v-if="selectedEvent.price"><strong>{{$t('price') || 'Price'}}:</strong> {{ formatPrice(selectedEvent.price) }}</p>
           <p v-if="selectedEvent.description">{{ selectedEvent.description }}</p>
           <div class="catalog-btn-row">
-            <button class="catalog-btn" @click="addToCart(selectedEvent)">{{$t('buyticket')}}</button>
+            <button class="catalog-btn" @click="addToCart(selectedEvent)">{{$t('addToCart')}}</button>
             <button class="catalog-btn" style="background:#bbb; margin-left:10px;" @click="closeModal">{{$t('close') || 'Close'}}</button>
           </div>
         </div>
@@ -59,7 +59,7 @@ export default {
   async mounted() {
     const res = await axios.get('http://localhost:3000/api/events');
     this.events = res.data;
-    // Expose showCrudPopup globally for cross-component use
+  
     if (this.$root) {
       this.$root.showCrudPopup = this.showCrudPopup;
     }

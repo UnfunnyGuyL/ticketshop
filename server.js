@@ -9,7 +9,7 @@ app.use(cors());
 
 const dbConfig = { host: 'localhost', user: 'root', password: '', database: 'ticketshop' };
 
-// Register endpoint
+
 app.post('/api/register', async (req, res) => {
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
@@ -27,7 +27,6 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// Login endpoint
 app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
@@ -55,7 +54,7 @@ function authMiddleware(req, res, next) {
   });
 }
 
-// Save cart for logged-in user
+
 app.post('/api/cart', authMiddleware, async (req, res) => {
   const userId = req.user.id;
   const cart = JSON.stringify(req.body.cart || []);
@@ -65,7 +64,7 @@ app.post('/api/cart', authMiddleware, async (req, res) => {
   res.json({ success: true });
 });
 
-// Load cart for logged-in user
+
 app.get('/api/cart', authMiddleware, async (req, res) => {
   const userId = req.user.id;
   const db = await mysql.createConnection(dbConfig);
@@ -74,8 +73,7 @@ app.get('/api/cart', authMiddleware, async (req, res) => {
   res.json({ cart: rows.length ? JSON.parse(rows[0].cart) : [] });
 });
 
-// --- EVENTS CRUD API ---
-// CREATE event
+
 app.post('/api/events', adminAuthMiddleware, async (req, res) => {
   const { title, date, location, price, description } = req.body;
   if (!title || !date || !location || price === undefined) {
@@ -92,7 +90,7 @@ app.post('/api/events', adminAuthMiddleware, async (req, res) => {
   }
 });
 
-// READ all events
+
 app.get('/api/events', async (req, res) => {
   const db = await mysql.createConnection(dbConfig);
   const [rows] = await db.execute('SELECT * FROM events');
@@ -100,7 +98,6 @@ app.get('/api/events', async (req, res) => {
   res.json(rows);
 });
 
-// READ single event
 app.get('/api/events/:id', async (req, res) => {
   const { id } = req.params;
   const db = await mysql.createConnection(dbConfig);
@@ -117,7 +114,7 @@ app.get('/api/events/:id', async (req, res) => {
   }
 });
 
-// UPDATE event
+
 app.put('/api/events/:id', adminAuthMiddleware, async (req, res) => {
   const { title, date, location, price, description } = req.body;
   const { id } = req.params;
@@ -135,7 +132,7 @@ app.put('/api/events/:id', adminAuthMiddleware, async (req, res) => {
   }
 });
 
-// DELETE event
+
 app.delete('/api/events/:id', adminAuthMiddleware, async (req, res) => {
   const { id } = req.params;
   const db = await mysql.createConnection(dbConfig);

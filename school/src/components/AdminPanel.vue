@@ -92,7 +92,7 @@ export default {
   methods: {
     formatDate(dateStr) {
       if (!dateStr) return ''
-      // Remove seconds and milliseconds: '2025-06-23T14:23:45.000Z' -> '2025-06-23 14:23'
+      
       const [date, time] = dateStr.split('T')
       if (!time) return date
       const [hh, mm] = time.split(':')
@@ -107,7 +107,7 @@ export default {
       }
     },
     showCrudPopup(messageKey) {
-      // Use global Home.vue popup if available
+     
       if (this.$root && this.$root.showCrudPopup) {
         this.$root.showCrudPopup(messageKey);
       } else {
@@ -119,7 +119,7 @@ export default {
       }
     },
     async updateEvent(event) {
-      // Ensure price is a number and not empty
+      
       if (event.price === '' || event.price === null || isNaN(Number(event.price))) {
         this.crudError = this.$t('priceMustBeNumber');
         return;
@@ -130,7 +130,7 @@ export default {
           this.crudError = this.$t('noAdminToken');
           return;
         }
-        // Debug: Log the request being sent
+       
         console.log('PUT /api/events/' + event.id, { ...event, price: Number(event.price), description: event.description || '' });
         const payload = { ...event, price: Number(event.price), description: event.description || '' };
         await axios.put(`http://localhost:3000/api/events/${event.id}`, payload, {
@@ -144,7 +144,7 @@ export default {
         if (e.response && e.response.data && e.response.data.message) {
           this.crudError += ' ' + e.response.data.message;
         }
-        // Log error and full response for debugging
+        
         console.error('Update event error:', e, e?.response);
       }
     },
@@ -199,7 +199,7 @@ export default {
       const res = await axios.get('http://localhost:3000/api/orders', {
         headers: { Authorization: 'Bearer ' + token }
       });
-      // Parse items JSON for each order
+   
       this.orders = res.data.map(order => ({
         ...order,
         items: typeof order.items === 'string' ? JSON.parse(order.items) : order.items

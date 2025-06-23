@@ -25,19 +25,19 @@ export default {
       return;
     }
     try {
-      // Fetch cart from backend
+     
       const res = await axios.get('http://localhost:3000/api/cart', {
         headers: { Authorization: 'Bearer ' + token }
       });
       const cart = res.data.cart || [];
       const username = localStorage.getItem('username') || 'unknown';
       if (cart.length === 0) return;
-      // Send order to backend
+  
       await axios.post('http://localhost:3000/api/orders', {
         username,
         items: cart
       }, { headers: { Authorization: 'Bearer ' + token } });
-      // Clear cart
+     
       await axios.post('http://localhost:3000/api/cart', { cart: [] }, {
         headers: { Authorization: 'Bearer ' + token }
       });
