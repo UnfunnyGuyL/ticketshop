@@ -33,6 +33,7 @@
       </ul>
     </nav>
 
+    <div v-if="showPopup" class="cart-popup">{{ popupMessage }}</div>
     <router-view />
 
     <footer class="footer">
@@ -59,7 +60,9 @@ export default {
   data() {
     return {
       showDropdown: false,
-      tokenCheck: Date.now() // Use timestamp for reactivity
+      tokenCheck: Date.now(),
+      showPopup: false,
+      popupMessage: ''
     }
   },
   computed: {
@@ -98,10 +101,15 @@ export default {
       if (event) event.stopPropagation();
     },
     logout() {
-      localStorage.removeItem('token');
-      this.showDropdown = false;
-      this.tokenCheck = Date.now();
-      this.$router.push('/');
+      localStorage.removeItem('token')
+      this.showDropdown = false
+      this.tokenCheck = Date.now()
+      this.popupMessage = this.$t('logoutSuccess')
+      this.showPopup = true
+      setTimeout(() => {
+        this.showPopup = false
+        this.$router.push('/')
+      }, 2000)
     },
     syncToken() {
       this.tokenCheck = Date.now();
@@ -114,6 +122,12 @@ export default {
           this.showDropdown = false;
         }
       }
+    }
+  },
+  watch: {
+    // Clear logout message on route change
+    $route() {
+      this.logoutMessage = ''
     }
   }
 }
@@ -189,5 +203,32 @@ export default {
   color: #ff9800;
   border-left: 3px solid #ffb300;
   padding-left: 30px;
+}
+.success {
+  color: #388e3c;
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+.cart-popup {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff9800;
+  color: #fff;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 24px rgba(44,62,80,0.18);
+  z-index: 2000;
+  animation: fadeInOut 2s;
+}
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
 }
 </style>

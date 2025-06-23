@@ -9,6 +9,7 @@
       <ul>
         <li v-for="(item, idx) in tosList" :key="idx">{{ item }}</li>
       </ul>
+      <p>{{$t('tosLong')}}</p>
     </div>
   </div>
 </template>

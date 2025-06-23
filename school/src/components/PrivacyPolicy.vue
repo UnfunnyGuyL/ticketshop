@@ -10,7 +10,7 @@
       <ul>
         <li v-for="(item, idx) in privacyList" :key="idx">{{ item }}</li>
       </ul>
-      <p>{{ $t('privacyContact') }}</p>
+      <p>{{ $t('privacyLong') }}</p>
     </div>
   </div>
 </template>

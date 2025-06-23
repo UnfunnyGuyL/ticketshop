@@ -14,7 +14,7 @@
       <tbody>
         <tr v-for="order in orders" :key="order.id">
           <td>{{ order.username }}</td>
-          <td>{{ order.date ? order.date.split('T')[0] + ' ' + (order.date.split('T')[1] || '') : '' }}</td>
+          <td>{{ formatDate(order.date) }}</td>
           <td>
             <ul>
               <li v-for="item in order.items" :key="item.title">
@@ -42,11 +42,21 @@ export default {
       error: ''
     }
   },
+  methods: {
+    formatDate(dateStr) {
+      if (!dateStr) return ''
+      // Remove seconds and milliseconds: '2025-06-23T14:23:45.000Z' -> '2025-06-23 14:23'
+      const [date, time] = dateStr.split('T')
+      if (!time) return date
+      const [hh, mm] = time.split(':')
+      return `${date} ${hh}:${mm}`
+    }
+  },
   async mounted() {
     try {
       const token = localStorage.getItem('adminToken');
       if (!token) {
-        this.error = 'No admin token found.';
+        this.error = this.$t('noAdminToken');
         console.error('No admin token found in localStorage.');
         return;
       }

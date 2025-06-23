@@ -13,6 +13,7 @@ const messages = {
     about: 'About Us',
     aboutTitle: 'About TicketWave',
     aboutText: 'TicketWave is your go-to platform for discovering and purchasing tickets to the best events in town. Whether you are looking for concerts, sports events, or theater shows, we have got you covered. Our mission is to provide a seamless ticketing experience for all our users.',
+    aboutLong: 'TicketWave was founded with the mission to make event ticketing simple, transparent, and accessible for everyone. Our team is passionate about connecting people with unforgettable experiences, whether it\'s a music concert, a food festival, a tech conference, or a local community event.\n\nWe work closely with event organizers to ensure that every ticket you purchase is authentic and that your buying experience is smooth from start to finish. Our secure payment system, user-friendly interface, and dedicated customer support team are here to help you every step of the way.\n\nAt TicketWave, we believe in the power of live events to bring people together and create lasting memories. We are constantly improving our platform based on your feedback and the latest technology trends, so you can always find and buy tickets with confidence.\n\nThank you for choosing TicketWave. We look forward to being part of your next great event!',
     tosTitle: 'Terms of Service',
     tosIntro: 'Welcome to TicketWave! By using our platform, you agree to our terms and conditions. Please read them carefully. We are committed to providing a safe and reliable ticketing experience. If you have any questions, contact our support team.',
     tosList: [
@@ -21,6 +22,7 @@ const messages = {
       'Misuse of the platform may result in account suspension.',
       'We reserve the right to update these terms at any time.'
     ],
+    tosLong: 'TicketWave is dedicated to providing a safe and fair ticketing experience for all users. By using our platform, you agree to follow our rules and respect other users and event organizers.\n\nPlease note that all ticket sales are final unless otherwise stated. If an event is canceled or rescheduled, we will do our best to notify you and provide options for refunds or exchanges, as permitted by the event organizer.\n\nYou are responsible for keeping your account information secure. Do not share your password with anyone. If you suspect unauthorized activity on your account, contact our support team immediately.\n\nMisuse of the platform, including fraudulent purchases or attempts to resell tickets in violation of event policies, may result in suspension or termination of your account.\n\nWe reserve the right to update these terms at any time. Changes will be communicated via email or posted on our website. Continued use of the platform after changes means you accept the new terms.\n\nFor any questions about our terms of service, please contact us. We are here to help and ensure you have a great experience with TicketWave.',
     shop: 'Shop',
     privacyTitle: 'Privacy Policy',
     privacyIntro: 'Your privacy is important to us. This page explains how TicketWave collects, uses, and protects your personal information when you use our platform.',
@@ -32,7 +34,7 @@ const messages = {
       'We use cookies to enhance your experience and for essential site functionality.',
       'Our privacy practices comply with applicable laws and regulations.'
     ],
-    privacyContact: 'If you have questions about our privacy policy, please contact us at privacy@ticketwave.com.',
+    privacyLong: 'At TicketWave, we take your privacy seriously. We use advanced encryption and security protocols to protect your data at every step. Our team regularly reviews our privacy practices to ensure compliance with the latest regulations and to keep your information safe.\n\nWe are transparent about how your data is used. You can always request a copy of your personal data, ask for corrections, or request deletion by contacting our support team. We never sell your data to third parties, and we only share information when required by law or to fulfill your ticket order.\n\nOur platform uses cookies and similar technologies to enhance your experience, remember your preferences, and provide personalized recommendations. You can manage your cookie preferences in your browser settings at any time.\n\nIf you have any questions or concerns about your privacy, please reach out to us. We are committed to earning and keeping your trust.',
     buyticket: 'Buy Ticket',
     learnmore: 'Learn more',
     price: 'Price',
@@ -81,9 +83,11 @@ const messages = {
     noOrders: 'No orders found.',
     fetchOrdersError: 'Failed to fetch orders',
     logout: 'Log out',
+    logoutSuccess: 'You have been logged out.',
     copyright: '© 2025 TicketWave. All rights reserved.',
     orderFailed: 'Order failed to process',
     loginRequiredToOrder: 'You must be logged in to place an order. Redirecting to login...',
+    noAdminToken: 'No admin token found.',
   },
   nl: {
     title: 'Aankomende Evenementen',
@@ -97,6 +101,7 @@ const messages = {
     about: 'Over Ons',
     aboutTitle: 'Over TicketWave',
     aboutText: 'TicketWave is jouw platform voor het ontdekken en kopen van tickets voor de beste evenementen in de stad. Of je nu op zoek bent naar concerten, sportevenementen of theaterstukken, wij hebben het allemaal. Onze missie is om een naadloze ticketervaring te bieden voor al onze gebruikers.',
+    aboutLong: 'TicketWave is opgericht met de missie om ticketverkoop eenvoudig, transparant en toegankelijk te maken voor iedereen. Ons team is gepassioneerd om mensen te verbinden met onvergetelijke ervaringen, of het nu gaat om een muziekconcert, een foodfestival, een techconferentie of een lokaal evenement.\n\nWe werken nauw samen met organisatoren om ervoor te zorgen dat elk ticket dat je koopt authentiek is en dat je aankoopervaring soepel verloopt van begin tot eind. Ons veilige betalingssysteem, gebruiksvriendelijke interface en toegewijd supportteam staan altijd voor je klaar.\n\nBij TicketWave geloven we in de kracht van live-evenementen om mensen samen te brengen en blijvende herinneringen te creëren. We verbeteren ons platform voortdurend op basis van jouw feedback en de nieuwste technologie, zodat je altijd met vertrouwen tickets kunt vinden en kopen.\n\nBedankt dat je voor TicketWave kiest. We kijken ernaar uit om deel uit te maken van jouw volgende geweldige evenement!',
     tosTitle: 'Gebruiksvoorwaarden',
     tosIntro: 'Welkom bij TicketWave! Door ons platform te gebruiken, ga je akkoord met onze voorwaarden. Lees ze zorgvuldig door. We streven naar een veilige en betrouwbare ticketervaring. Neem bij vragen contact op met onze support.',
     tosList: [
@@ -105,6 +110,7 @@ const messages = {
       'Misbruik van het platform kan leiden tot schorsing van het account.',
       'We behouden ons het recht voor deze voorwaarden op elk moment te wijzigen.'
     ],
+    tosLong: 'TicketWave streeft ernaar een veilige en eerlijke ticketervaring te bieden voor alle gebruikers. Door ons platform te gebruiken, ga je akkoord met onze regels en respecteer je andere gebruikers en organisatoren.\n\nLet op: alle ticketverkopen zijn definitief, tenzij anders vermeld. Als een evenement wordt geannuleerd of verplaatst, doen wij ons best je te informeren en opties te bieden voor restitutie of omruiling, indien toegestaan door de organisator.\n\nJe bent zelf verantwoordelijk voor het veilig houden van je accountgegevens. Deel je wachtwoord nooit met anderen. Bij vermoeden van ongeautoriseerde activiteiten op je account, neem direct contact op met onze support.\n\nMisbruik van het platform, zoals frauduleuze aankopen of pogingen tot wederverkoop in strijd met het beleid van evenementen, kan leiden tot schorsing of beëindiging van je account.\n\nWe behouden ons het recht voor deze voorwaarden op elk moment te wijzigen. Wijzigingen worden gecommuniceerd via e-mail of op onze website. Door het platform te blijven gebruiken na wijzigingen, accepteer je de nieuwe voorwaarden.\n\nHeb je vragen over onze gebruiksvoorwaarden? Neem gerust contact met ons op. We helpen je graag en zorgen voor een fijne ervaring met TicketWave.',
     shop: 'Winkel',
     privacyTitle: 'Privacybeleid',
     privacyIntro: 'Jouw privacy is belangrijk voor ons. Op deze pagina lees je hoe TicketWave jouw persoonlijke gegevens verzamelt, gebruikt en beschermt wanneer je ons platform gebruikt.',
@@ -116,7 +122,7 @@ const messages = {
       'We gebruiken cookies om je ervaring te verbeteren en voor essentiële sitefunctionaliteit.',
       'Ons privacybeleid voldoet aan de toepasselijke wet- en regelgeving.'
     ],
-    privacyContact: 'Heb je vragen over ons privacybeleid? Neem dan contact op via privacy@ticketwave.com.',
+    privacyLong: 'Bij TicketWave nemen we jouw privacy serieus. We gebruiken geavanceerde encryptie en beveiligingsprotocollen om je gegevens op elk moment te beschermen. Ons team beoordeelt regelmatig ons privacybeleid om te voldoen aan de nieuwste regelgeving en om jouw informatie veilig te houden.\n\nWe zijn transparant over hoe jouw gegevens worden gebruikt. Je kunt altijd een kopie van je persoonlijke gegevens opvragen, correcties aanvragen of verwijdering verzoeken door contact op te nemen met onze support. We verkopen je gegevens nooit aan derden en delen alleen informatie als dat wettelijk verplicht is of om je bestelling uit te voeren.\n\nOns platform gebruikt cookies en vergelijkbare technologieën om je ervaring te verbeteren, je voorkeuren te onthouden en persoonlijke aanbevelingen te doen. Je kunt je cookievoorkeuren op elk moment beheren in je browserinstellingen.\n\nHeb je vragen of zorgen over je privacy? Neem gerust contact met ons op. We doen er alles aan om jouw vertrouwen te verdienen en te behouden.',
     buyticket: 'Koop Ticket',
     learnmore: 'Meer informatie',
     price: 'Prijs',
@@ -165,9 +171,11 @@ const messages = {
     noOrders: 'Geen bestellingen gevonden.',
     fetchOrdersError: 'Bestellingen ophalen mislukt',
     logout: 'Uitloggen',
+    logoutSuccess: 'Je bent uitgelogd.',
     copyright: '© 2025 TicketWave. Alle rechten voorbehouden.',
     orderFailed: 'Bestelling verwerken mislukt',
     loginRequiredToOrder: 'Je moet ingelogd zijn om een bestelling te plaatsen. Je wordt doorgestuurd naar inloggen...',
+    noAdminToken: 'Geen admin-token gevonden.',
   },
 
 }

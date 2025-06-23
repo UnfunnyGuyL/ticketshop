@@ -1,37 +1,53 @@
 <template>
-  <div class="auth-container">
+  <div class="authcontainer">
+    <div v-if="showPopup" class="cart-popup">{{ popupMessage }}</div>
     <h2>{{ $t('registerTitle') }}</h2>
     <form @submit.prevent="register">
       <input v-model="username" :placeholder="$t('username')" required />
       <input v-model="email" type="email" :placeholder="$t('email')" required />
       <input v-model="password" type="password" :placeholder="$t('password')" required />
       <button type="submit">{{ $t('register') }}</button>
-      <p v-if="error" class="error">{{ error }}</p>
     </form>
   </div>
 </template>
 <script>
-import axios from 'axios';
+import axios from 'axios'
 export default {
-  data() { return { username: '', email: '', password: '', error: '' }; },
+  data() {
+    return {
+      username: '',
+      email: '',
+      password: '',
+      showPopup: false,
+      popupMessage: ''
+    }
+  },
   methods: {
+    showRegisterPopup(message) {
+      this.popupMessage = message
+      this.showPopup = true
+      setTimeout(() => {
+        this.showPopup = false
+      }, 2000)
+    },
     async register() {
       try {
         await axios.post('http://localhost:3000/api/register', {
           username: this.username, email: this.email, password: this.password
-        });
-        alert(this.$t('registerSuccess'));
-        this.$router.push('/login');
+        })
+        this.showRegisterPopup(this.$t('registerSuccess'))
+        setTimeout(() => {
+          this.$router.push('/login')
+        }, 1500)
       } catch (e) {
-        this.error = e.response?.data?.message || this.$t('registerFailed');
-        alert(this.error);
+        this.showRegisterPopup(e.response?.data?.message || this.$t('registerFailed'))
       }
     }
   }
 }
 </script>
 <style scoped>
-.auth-container {
+.authcontainer {
   max-width: 400px;
   min-height: unset;
   margin: 60px auto;
@@ -45,22 +61,22 @@ export default {
   display: block;
   transition: box-shadow 0.2s;
 }
-.auth-container:hover {
+.authcontainer:hover {
   box-shadow: 0 8px 40px rgba(255,152,0,0.18);
 }
-.auth-container h2 {
+.authcontainer h2 {
   color: #203a43;
   font-size: 2rem;
   font-weight: 800;
   margin-bottom: 18px;
   text-align: center;
 }
-.auth-container form {
+.authcontainer form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.auth-container input {
+.authcontainer input {
   display: block;
   width: 80%;
   margin-bottom: 18px;
@@ -71,7 +87,7 @@ export default {
   box-sizing: border-box;
   text-align: center;
 }
-.auth-container button {
+.authcontainer button {
   background: #ff9800;
   color: #fff;
   border: none;
@@ -82,12 +98,29 @@ export default {
   cursor: pointer;
   transition: background 0.18s;
 }
-.auth-container button:hover {
+.authcontainer button:hover {
   background: #e65100;
 }
-.error {
-  color: #e65100;
-  margin-top: 10px;
+.cart-popup {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff9800;
+  color: #fff;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 24px rgba(44,62,80,0.18);
+  z-index: 2000;
+  animation: fadeInOut 2s;
+}
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
 }
 .footer {
   position: fixed;

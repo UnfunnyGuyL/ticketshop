@@ -1,27 +1,40 @@
 <template>
   <div class="auth-container">
+    <div v-if="showPopup" class="cart-popup">{{ popupMessage }}</div>
     <h2>{{ $t('loginTitle') }}</h2>
     <form @submit.prevent="login">
       <input v-model="username" :placeholder="$t('username')" required />
       <input v-model="password" type="password" :placeholder="$t('password')" required />
       <button type="submit">{{ $t('login') }}</button>
       <router-link to="/register" class="switch-link">{{ $t('noAccount') }}</router-link>
-      <p v-if="error" class="error">{{ error }}</p>
     </form>
   </div>
 </template>
 <script>
 import axios from 'axios';
 export default {
-  data() { return { username: '', password: '', error: '' }; },
+  data() {
+    return {
+      username: '',
+      password: '',
+      showPopup: false,
+      popupMessage: ''
+    }
+  },
   methods: {
+    showLoginPopup(message) {
+      this.popupMessage = message
+      this.showPopup = true
+      setTimeout(() => {
+        this.showPopup = false
+      }, 2000)
+    },
     async login() {
       try {
         const res = await axios.post('http://localhost:3000/api/login', {
           username: this.username, password: this.password
         });
         localStorage.setItem('token', res.data.token);
-        
         const guestCart = localStorage.getItem('cart');
         if (guestCart) {
           try {
@@ -29,15 +42,14 @@ export default {
               headers: { Authorization: 'Bearer ' + res.data.token }
             });
             localStorage.removeItem('cart');
-          } catch (e) {
-           
-          }
+          } catch (e) {}
         }
-        alert(this.$t('loginSuccess'));
-        window.location.href = '/';
+        this.showLoginPopup(this.$t('loginSuccess'))
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1500)
       } catch (e) {
-        this.error = e.response?.data?.message || this.$t('loginFailed');
-        alert(this.error);
+        this.showLoginPopup(e.response?.data?.message || this.$t('loginFailed'))
       }
     }
   }
@@ -98,9 +110,26 @@ export default {
 .auth-container button:hover {
   background: #e65100;
 }
-.error {
-  color: #e65100;
-  margin-top: 10px;
+.cart-popup {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff9800;
+  color: #fff;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 24px rgba(44,62,80,0.18);
+  z-index: 2000;
+  animation: fadeInOut 2s;
+}
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
 }
 .switch-link {
   display: block;
