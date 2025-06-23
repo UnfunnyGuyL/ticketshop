@@ -6,23 +6,27 @@
       </router-link>
       <ul class="navlinks">
         <li>
-          <a href="#events" class="shopiconlink" aria-label="Shop">
+          <router-link to="/catalog" class="shopiconlink" aria-label="Shop">
             <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" alt="Shop" width="36" height="36" style="filter: brightness(0) invert(1);" />
-          </a>
+          </router-link>
         </li>
         <li>
           <router-link to="/cart" class="carticonlink" aria-label="Cart">
             <img src="https://cdn-icons-png.flaticon.com/512/34/34627.png" alt="Cart" width="36" height="36" style="filter: brightness(0) invert(1);" />
           </router-link>
         </li>
-        <li style="position: relative;">
+        <li style="position: relative; display: flex; align-items: center;">
+          <span v-if="isLoggedIn" class="user-display" style="color: #fff; font-weight: 600; margin-right: 8px;">
+            {{ usernameDisplay }}
+          </span>
           <a href="#" class="loginiconlink" aria-label="Login" @click.prevent="toggleDropdown">
             <img src="https://cdn-icons-png.flaticon.com/512/681/681494.png" alt="Login" width="36" height="36" style="filter: brightness(0) invert(1);" />
           </a>
           <div v-if="showDropdown" class="login-dropdown">
-            <router-link to="/login" class="dropdown-item">Login</router-link>
-            <router-link to="/register" class="dropdown-item">Register</router-link>
-            <router-link to="/admin" class="dropdown-item">Admin Panel</router-link>
+            <router-link v-if="!isLoggedIn" to="/login" class="dropdown-item">Login</router-link>
+            <router-link v-if="!isLoggedIn" to="/register" class="dropdown-item">Register</router-link>
+            <router-link v-if="isLoggedIn" to="/admin" class="dropdown-item">Admin Panel</router-link>
+            <button v-if="isLoggedIn" class="dropdown-item" @click="logout">Log out</button>
           </div>
         </li>
       </ul>
@@ -53,14 +57,36 @@
 export default {
   data() {
     return {
-      showDropdown: false
+      showDropdown: false,
+      tokenCheck: Date.now() // Use timestamp for reactivity
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      return !!localStorage.getItem('token') && this.tokenCheck >= 0;
+    },
+    usernameDisplay() {
+      if (!this.isLoggedIn) return '';
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) return '';
+        // JWT: header.payload.signature
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload.username || '';
+      } catch {
+        return '';
+      }
     }
   },
   mounted() {
     document.addEventListener('click', this.handleClickOutside);
+    window.addEventListener('storage', this.syncToken);
+    // On mount, force a check for token to update UI if already logged in
+    this.tokenCheck = Date.now();
   },
   beforeUnmount() {
     document.removeEventListener('click', this.handleClickOutside);
+    window.removeEventListener('storage', this.syncToken);
   },
   methods: {
     setLang(lang) {
@@ -70,12 +96,21 @@ export default {
       this.showDropdown = !this.showDropdown;
       if (event) event.stopPropagation();
     },
+    logout() {
+      localStorage.removeItem('token');
+      this.showDropdown = false;
+      this.tokenCheck = Date.now();
+      this.$router.push('/');
+    },
+    syncToken() {
+      this.tokenCheck = Date.now();
+    },
     handleClickOutside(event) {
       if (this.showDropdown) {
-      const dropdown = this.$el.querySelector('.login-dropdown');
-      const icon = this.$el.querySelector('.loginiconlink');
-      if (dropdown && !dropdown.contains(event.target) && icon && !icon.contains(event.target)) {
-      this.showDropdown = false;
+        const dropdown = this.$el.querySelector('.login-dropdown');
+        const icon = this.$el.querySelector('.loginiconlink');
+        if (dropdown && !dropdown.contains(event.target) && icon && !icon.contains(event.target)) {
+          this.showDropdown = false;
         }
       }
     }

@@ -44,4 +44,42 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+function authMiddleware(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.sendStatus(401);
+  jwt.verify(token, 'your_jwt_secret', (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+}
+
+// Save cart for logged-in user
+app.post('/api/cart', authMiddleware, async (req, res) => {
+  const userId = req.user.id;
+  const cart = JSON.stringify(req.body.cart || []);
+  const db = await mysql.createConnection(dbConfig);
+  await db.execute('REPLACE INTO carts (user_id, cart) VALUES (?, ?)', [userId, cart]);
+  db.end();
+  res.json({ success: true });
+});
+
+// Load cart for logged-in user
+app.get('/api/cart', authMiddleware, async (req, res) => {
+  const userId = req.user.id;
+  const db = await mysql.createConnection(dbConfig);
+  const [rows] = await db.execute('SELECT cart FROM carts WHERE user_id = ?', [userId]);
+  db.end();
+  res.json({ cart: rows.length ? JSON.parse(rows[0].cart) : [] });
+});
+
+// Fetch all events
+app.get('/api/events', async (req, res) => {
+  const db = await mysql.createConnection(dbConfig);
+  const [rows] = await db.execute('SELECT * FROM events');
+  db.end();
+  res.json(rows);
+});
+
 app.listen(3000, () => console.log('API running on http://localhost:3000'));

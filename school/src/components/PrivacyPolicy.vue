@@ -20,7 +20,7 @@ export default {
   name: 'PrivacyPolicy',
   computed: {
     privacyList() {
-      // Ensure we get the array, not a string
+      
       return this.$i18n.messages[this.$i18n.locale].privacyList || [];
     }
   }
