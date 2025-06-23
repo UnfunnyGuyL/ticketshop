@@ -88,6 +88,8 @@ const messages = {
     orderFailed: 'Order failed to process',
     loginRequiredToOrder: 'You must be logged in to place an order. Redirecting to login...',
     noAdminToken: 'No admin token found.',
+    azFilter: 'A-Z',
+    azFilterTooltip: 'Sort events alphabetically',
   },
   nl: {
     title: 'Aankomende Evenementen',
@@ -176,6 +178,8 @@ const messages = {
     orderFailed: 'Bestelling verwerken mislukt',
     loginRequiredToOrder: 'Je moet ingelogd zijn om een bestelling te plaatsen. Je wordt doorgestuurd naar inloggen...',
     noAdminToken: 'Geen admin-token gevonden.',
+    azFilter: 'A-Z',
+    azFilterTooltip: 'Sorteer evenementen alfabetisch',
   },
 
 }

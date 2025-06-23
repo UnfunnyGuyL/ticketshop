@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="app-flex-col">
     <nav class="navbar">
       <router-link to="/" class="logo" aria-label="Home">
         🎟 TicketWave
@@ -26,7 +26,6 @@
             <router-link v-if="!isLoggedIn" to="/login" class="dropdown-item">{{$t('login')}}</router-link>
             <router-link v-if="!isLoggedIn" to="/register" class="dropdown-item">{{$t('register')}}</router-link>
             <router-link v-if="!isLoggedIn" to="/admin" class="dropdown-item">{{$t('adminPanel')}}</router-link>
-            <router-link v-if="isLoggedIn" to="/cart" class="dropdown-item">{{$t('cartTitle')}}</router-link>
             <button v-if="isLoggedIn" class="dropdown-item" @click="logout">{{$t('logout')}}</button>
           </div>
         </li>
@@ -35,7 +34,6 @@
 
     <div v-if="showPopup" class="cart-popup">{{ popupMessage }}</div>
     <router-view />
-
     <footer class="footer">
       <div class="footerrow">
         <div class="footerleft">
@@ -135,7 +133,19 @@ export default {
 
 <style src="./app.css"></style>
 
-<style>
+<style scoped>
+.app-flex-col {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.router-view, .router-view + * {
+  flex: 1 0 auto;
+}
+.footer {
+  margin-top: auto;
+  /* ...existing code... */
+}
 .logo {
   font-size: 1.5rem;
   font-weight: bold;

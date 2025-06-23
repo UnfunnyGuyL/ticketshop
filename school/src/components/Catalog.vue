@@ -49,7 +49,7 @@ export default {
   },
   async mounted() {
     const res = await axios.get('http://localhost:3000/api/events');
-    // Set prices for specific events
+ 
     const priceMap = {
       'Comedy Gala': 199,
       'Food Expo': 50,
