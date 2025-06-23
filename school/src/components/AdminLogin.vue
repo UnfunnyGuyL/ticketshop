@@ -1,10 +1,10 @@
 <template>
   <div class="auth-container">
-    <h2>Admin Login</h2>
+    <h2>{{ $t('adminLoginTitle') }}</h2>
     <form @submit.prevent="login">
-      <input v-model="username" placeholder="Username" required />
-      <input v-model="password" type="password" placeholder="Password" required />
-      <button type="submit">Login</button>
+      <input v-model="username" :placeholder="$t('username')" required />
+      <input v-model="password" type="password" :placeholder="$t('password')" required />
+      <button type="submit">{{ $t('login') }}</button>
       <p v-if="error" class="error">{{ error }}</p>
     </form>
   </div>
@@ -25,7 +25,7 @@ export default {
       if (this.username === 'admin' && this.password === 'admin') {
         this.$router.push('/admin-panel');
       } else {
-        this.error = "youre not allowed here";
+        this.error = this.$t('adminForbidden');
       }
     }
   }

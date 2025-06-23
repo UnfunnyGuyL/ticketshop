@@ -1,11 +1,11 @@
 <template>
   <div class="auth-container">
-    <h2>Register</h2>
+    <h2>{{ $t('registerTitle') }}</h2>
     <form @submit.prevent="register">
-      <input v-model="username" placeholder="Username" required />
-      <input v-model="email" type="email" placeholder="Email" required />
-      <input v-model="password" type="password" placeholder="Password" required />
-      <button type="submit">Register</button>
+      <input v-model="username" :placeholder="$t('username')" required />
+      <input v-model="email" type="email" :placeholder="$t('email')" required />
+      <input v-model="password" type="password" :placeholder="$t('password')" required />
+      <button type="submit">{{ $t('register') }}</button>
       <p v-if="error" class="error">{{ error }}</p>
     </form>
   </div>
@@ -20,10 +20,10 @@ export default {
         await axios.post('http://localhost:3000/api/register', {
           username: this.username, email: this.email, password: this.password
         });
-        alert('Registration successful! You can now log in.');
+        alert(this.$t('registerSuccess'));
         this.$router.push('/login');
       } catch (e) {
-        this.error = e.response?.data?.message || 'Registration failed';
+        this.error = e.response?.data?.message || this.$t('registerFailed');
         alert(this.error);
       }
     }

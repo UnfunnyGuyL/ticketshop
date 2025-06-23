@@ -1,22 +1,22 @@
 <template>
   <div class="auth-container">
-    <h2>Login</h2>
+    <h2>{{ $t('loginTitle') }}</h2>
     <form @submit.prevent="login">
-      <input v-model="username" placeholder="Username" required />
-      <input v-model="password" type="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-      <router-link to="/register" class="switch-link">Don't have an account? Register here</router-link>
+      <input v-model="username" :placeholder="$t('username')" required />
+      <input v-model="password" type="password" :placeholder="$t('password')" required />
+      <button type="submit">{{ $t('login') }}</button>
+      <router-link to="/register" class="switch-link">{{ $t('noAccount') }}</router-link>
       <p v-if="error" class="error">{{ error }}</p>
     </form>
   </div>
-        </template>
-        <script>
-        import axios from 'axios';
-        export default {
-        data() { return { username: '', password: '', error: '' }; },
-        methods: {
-        async login() {
-        try {
+</template>
+<script>
+import axios from 'axios';
+export default {
+  data() { return { username: '', password: '', error: '' }; },
+  methods: {
+    async login() {
+      try {
         const res = await axios.post('http://localhost:3000/api/login', {
           username: this.username, password: this.password
         });
@@ -33,10 +33,10 @@
            
           }
         }
-        alert('Login successful!');
+        alert(this.$t('loginSuccess'));
         window.location.href = '/';
       } catch (e) {
-        this.error = e.response?.data?.message || 'Login failed';
+        this.error = e.response?.data?.message || this.$t('loginFailed');
         alert(this.error);
       }
     }
