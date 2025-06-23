@@ -19,7 +19,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, idx) in cart" :key="item.id">
-            <td>{{ $t('eventNames.' + item.title) || item.title }}</td>
+            <td>{{ $t('eventNames.' + item.title) !== 'eventNames.' + item.title ? $t('eventNames.' + item.title) : item.title }}</td>
             <td>{{ item.date.split('T')[0] }}</td>
             <td>{{ item.location }}</td>
             <td>

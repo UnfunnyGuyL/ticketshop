@@ -11,20 +11,20 @@
     </div>
     <div class="catalog-list">
       <div class="catalog-card" v-for="event in filteredEvents" :key="event.id">
-        <h2>{{ $t('eventNames.' + event.title) || event.title }}</h2>
+        <h2>{{ $t('eventNames.' + event.title) !== 'eventNames.' + event.title ? $t('eventNames.' + event.title) : event.title }}</h2>
         <p><strong>{{$t('date')}}:</strong> {{ event.date.split('T')[0] }}</p>
         <button class="catalog-btn" @click="openModal(event)">{{$t('learnmore')}}</button>
-        <button class="catalog-btn" @click="addToCart(event)">{{$t('buyticket')}}</button>
+        <button class="catalog-btn" @click="addToCart(event)">{{$t('addToCart')}}</button>
       </div>
     </div>
     <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
       <div class="modal-content">
-        <h2>{{ $t('eventNames.' + selectedEvent.title) || selectedEvent.title }}</h2>
+        <h2>{{ $t('eventNames.' + selectedEvent.title) !== 'eventNames.' + selectedEvent.title ? $t('eventNames.' + selectedEvent.title) : selectedEvent.title }}</h2>
         <p><strong>{{$t('date')}}:</strong> {{ selectedEvent.date.split('T')[0] }}</p>
         <p><strong>{{$t('location')}}:</strong> {{ selectedEvent.location }}</p>
         <p><strong>{{$t('price')}}:</strong> {{ formatPrice(selectedEvent.price) }}</p>
         <p>{{ selectedEvent.description }}</p>
-        <button class="catalog-btn" @click="addToCart(selectedEvent); closeModal()">{{$t('buyticket')}}</button>
+        <button class="catalog-btn" @click="addToCart(selectedEvent); closeModal()">{{$t('addToCart')}}</button>
         <button class="catalog-btn" style="background:#bbb; margin-left:10px;" @click="closeModal">{{$t('close')}}</button>
       </div>
     </div>
@@ -49,19 +49,7 @@ export default {
   },
   async mounted() {
     const res = await axios.get('http://localhost:3000/api/events');
- 
-    const priceMap = {
-      'Comedy Gala': 199,
-      'Food Expo': 50,
-      'Jazz Festival': 36,
-      'Rock Night': 55,
-      'Tech Conference': 65,
-      'Winter Wonderland': 25
-    };
-    this.events = res.data.map(e => ({
-      ...e,
-      price: priceMap[e.title] !== undefined ? priceMap[e.title] : ((typeof e.price === 'number' && !isNaN(e.price)) ? e.price : (Math.floor(Math.random() * 91) + 10))
-    }));
+    this.events = res.data;
   },
   computed: {
     filteredEvents() {
@@ -94,7 +82,7 @@ export default {
     async addToCart(event) {
       const token = localStorage.getItem('token');
       if (!token) {
-        this.showCartPopup('You are not logged in!');
+        this.showCartPopup(this.$t('notLoggedIn'));
         return;
       }
      
@@ -109,7 +97,7 @@ export default {
       } catch (e) {
         cart = [];
       }
-      // Ensure event.id is a number for comparison
+      
       const eventId = Number(event.id);
       const idx = cart.findIndex(item => Number(item.id) === eventId);
       if (idx !== -1) {
@@ -122,9 +110,9 @@ export default {
         await axios.post('http://localhost:3000/api/cart', { cart }, {
           headers: { Authorization: 'Bearer ' + token }
         });
-        this.showCartPopup('Added to cart!');
+        this.showCartPopup(this.$t('addedToCart'));
       } catch (e) {
-        this.showCartPopup('Failed to save cart.');
+        this.showCartPopup(this.$t('failedToSaveCart'));
       }
     },
     openModal(event) {

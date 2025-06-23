@@ -12,7 +12,7 @@
       <h2>{{$t('title')}}</h2>
       <div class="catalog-list">
         <div class="catalog-card" v-for="event in displayedEvents" :key="event.id">
-          <h2>{{ $t('eventNames.' + event.title) || event.title }}</h2>
+          <h2>{{ $t('eventNames.' + event.title) !== 'eventNames.' + event.title ? $t('eventNames.' + event.title) : event.title }}</h2>
           <p><strong>{{$t('date')}}:</strong> {{ event.date.split('T')[0] }}</p>
           <div class="catalog-btn-row">
             <button class="catalog-btn" @click="openModal(event)">{{$t('learnmore')}}</button>
@@ -22,7 +22,7 @@
       </div>
       <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
         <div class="modal-content">
-          <h2>{{ $t('eventNames.' + selectedEvent.title) || selectedEvent.title }}</h2>
+          <h2>{{ $t('eventNames.' + selectedEvent.title) !== 'eventNames.' + selectedEvent.title ? $t('eventNames.' + selectedEvent.title) : selectedEvent.title }}</h2>
           <p><strong>{{$t('date')}}:</strong> {{ selectedEvent.date.split('T')[0] }}</p>
           <p v-if="selectedEvent.location"><strong>{{$t('location')}}:</strong> {{ selectedEvent.location }}</p>
           <p v-if="selectedEvent.price"><strong>{{$t('price') || 'Price'}}:</strong> {{ formatPrice(selectedEvent.price) }}</p>
@@ -58,19 +58,11 @@ export default {
   },
   async mounted() {
     const res = await axios.get('http://localhost:3000/api/events');
-    // Set prices for specific events to match Catalog.vue
-    const priceMap = {
-      'Comedy Gala': 199,
-      'Food Expo': 50,
-      'Jazz Festival': 36,
-      'Rock Night': 55,
-      'Tech Conference': 65,
-      'Winter Wonderland': 25
-    };
-    this.events = res.data.map(e => ({
-      ...e,
-      price: priceMap[e.title] !== undefined ? priceMap[e.title] : ((typeof e.price === 'number' && !isNaN(e.price)) ? e.price : (Math.floor(Math.random() * 91) + 10))
-    }));
+    this.events = res.data;
+    // Expose showCrudPopup globally for cross-component use
+    if (this.$root) {
+      this.$root.showCrudPopup = this.showCrudPopup;
+    }
   },
   methods: {
     scrollToEvents() {
@@ -85,8 +77,15 @@ export default {
       this.showModal = false;
       this.selectedEvent = {};
     },
-    showCartPopup(message) {
-      this.popupMessage = message;
+    showCartPopup(messageKey) {
+      this.popupMessage = this.$t(messageKey);
+      this.showPopup = true;
+      setTimeout(() => {
+        this.showPopup = false;
+      }, 2000);
+    },
+    showCrudPopup(messageKey) {
+      this.popupMessage = this.$t(messageKey);
       this.showPopup = true;
       setTimeout(() => {
         this.showPopup = false;
@@ -95,7 +94,7 @@ export default {
     async addToCart(event) {
       const token = localStorage.getItem('token');
       if (!token) {
-        this.showCartPopup('You are not logged in!');
+        this.showCartPopup('notLoggedIn');
         return;
       }
       const quantity = 1;
@@ -119,9 +118,9 @@ export default {
         await axios.post('http://localhost:3000/api/cart', { cart }, {
           headers: { Authorization: 'Bearer ' + token }
         });
-        this.showCartPopup('Added to cart!');
+        this.showCartPopup('addedToCart');
       } catch (e) {
-        this.showCartPopup('Failed to save cart.');
+        this.showCartPopup('failedToSaveCart');
       }
     },
     formatPrice(price) {

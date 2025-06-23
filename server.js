@@ -74,7 +74,25 @@ app.get('/api/cart', authMiddleware, async (req, res) => {
   res.json({ cart: rows.length ? JSON.parse(rows[0].cart) : [] });
 });
 
-// Fetch all events
+// --- EVENTS CRUD API ---
+// CREATE event
+app.post('/api/events', adminAuthMiddleware, async (req, res) => {
+  const { title, date, location, price, description } = req.body;
+  if (!title || !date || !location || price === undefined) {
+    return res.status(400).json({ success: false, message: 'All fields required.' });
+  }
+  const db = await mysql.createConnection(dbConfig);
+  try {
+    await db.execute('INSERT INTO events (title, date, location, price, description) VALUES (?, ?, ?, ?, ?)', [title, date, location, price, description]);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(400).json({ success: false, message: 'Failed to add event.' });
+  } finally {
+    db.end();
+  }
+});
+
+// READ all events
 app.get('/api/events', async (req, res) => {
   const db = await mysql.createConnection(dbConfig);
   const [rows] = await db.execute('SELECT * FROM events');
@@ -82,6 +100,54 @@ app.get('/api/events', async (req, res) => {
   res.json(rows);
 });
 
+// READ single event
+app.get('/api/events/:id', async (req, res) => {
+  const { id } = req.params;
+  const db = await mysql.createConnection(dbConfig);
+  try {
+    const [rows] = await db.execute('SELECT * FROM events WHERE id = ?', [id]);
+    if (rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'Event not found.' });
+    }
+    res.json(rows[0]);
+  } catch (e) {
+    res.status(500).json({ success: false, message: 'Failed to fetch event.' });
+  } finally {
+    db.end();
+  }
+});
+
+// UPDATE event
+app.put('/api/events/:id', adminAuthMiddleware, async (req, res) => {
+  const { title, date, location, price, description } = req.body;
+  const { id } = req.params;
+  if (!title || !date || !location || price === undefined) {
+    return res.status(400).json({ success: false, message: 'All fields required.' });
+  }
+  const db = await mysql.createConnection(dbConfig);
+  try {
+    await db.execute('UPDATE events SET title=?, date=?, location=?, price=?, description=? WHERE id=?', [title, date, location, price, description, id]);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(400).json({ success: false, message: 'Failed to update event.' });
+  } finally {
+    db.end();
+  }
+});
+
+// DELETE event
+app.delete('/api/events/:id', adminAuthMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const db = await mysql.createConnection(dbConfig);
+  try {
+    await db.execute('DELETE FROM events WHERE id=?', [id]);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(400).json({ success: false, message: 'Failed to delete event.' });
+  } finally {
+    db.end();
+  }
+});
 
 app.post('/api/orders', authMiddleware, async (req, res) => {
   const userId = req.user.id;
@@ -107,7 +173,6 @@ app.post('/api/orders', authMiddleware, async (req, res) => {
   }
 });
 
-
 function adminAuthMiddleware(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -118,7 +183,6 @@ function adminAuthMiddleware(req, res, next) {
     next();
   });
 }
-
 
 app.get('/api/orders', adminAuthMiddleware, async (req, res) => {
   const db = await mysql.createConnection(dbConfig);

@@ -33,7 +33,9 @@
     </nav>
 
     <div v-if="showPopup" class="cart-popup">{{ popupMessage }}</div>
-    <router-view />
+    <div class="main-content">
+      <router-view />
+    </div>
     <footer class="footer">
       <div class="footerrow">
         <div class="footerleft">
@@ -136,6 +138,11 @@ export default {
 <style scoped>
 .app-flex-col {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.main-content {
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
 }
