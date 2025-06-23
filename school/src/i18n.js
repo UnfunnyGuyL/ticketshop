@@ -8,7 +8,7 @@ const messages = {
     buy: 'Buy Ticket',
     welcome: 'Welcome to TicketWave',
     subtitle: 'Get your tickets now!',
-    browse: 'Browse Events',
+    browse: 'Browse featured Events',
     login: 'Login',
     about: 'About Us',
     aboutTitle: 'About TicketWave',
@@ -22,6 +22,19 @@ const messages = {
       'We reserve the right to update these terms at any time.'
     ],
     shop: 'Shop',
+    privacyTitle: 'Privacy Policy',
+    privacyIntro: 'Your privacy is important to us. This page explains how TicketWave collects, uses, and protects your personal information when you use our platform.',
+    privacyList: [
+      'We only collect information necessary for ticket purchases and account management.',
+      'Your data is never sold or shared with third parties for marketing purposes.',
+      'All payment transactions are processed securely using industry-standard encryption.',
+      'You can request to view, update, or delete your personal data at any time by contacting our support team.',
+      'We use cookies to enhance your experience and for essential site functionality.',
+      'Our privacy practices comply with applicable laws and regulations.'
+    ],
+    privacyContact: 'If you have questions about our privacy policy, please contact us at privacy@ticketwave.com.',
+    buyticket: 'Buy Ticket',
+    learnmore: 'Learn more',
 },
   nl: {
     title: 'Aankomende Evenementen',
@@ -30,7 +43,7 @@ const messages = {
     buy: 'Koop Ticket',
     welcome: 'Welkom bij TicketWave',
     subtitle: 'Koop je tickets nu!',
-    browse: 'Bekijk Evenementen',
+    browse: 'Bekijk aanbevolen Evenementen',
     login: 'Inloggen',
     about: 'Over Ons',
     aboutTitle: 'Over TicketWave',
@@ -44,6 +57,19 @@ const messages = {
       'We behouden ons het recht voor deze voorwaarden op elk moment te wijzigen.'
     ],
     shop: 'Winkel',
+    privacyTitle: 'Privacybeleid',
+    privacyIntro: 'Jouw privacy is belangrijk voor ons. Op deze pagina lees je hoe TicketWave jouw persoonlijke gegevens verzamelt, gebruikt en beschermt wanneer je ons platform gebruikt.',
+    privacyList: [
+      'We verzamelen alleen informatie die nodig is voor ticketaankopen en accountbeheer.',
+      'Jouw gegevens worden nooit verkocht of gedeeld met derden voor marketingdoeleinden.',
+      'Alle betalingen worden veilig verwerkt met industriestandaard encryptie.',
+      'Je kunt op elk moment verzoeken om je persoonlijke gegevens in te zien, te wijzigen of te verwijderen door contact op te nemen met onze support.',
+      'We gebruiken cookies om je ervaring te verbeteren en voor essentiële sitefunctionaliteit.',
+      'Ons privacybeleid voldoet aan de toepasselijke wet- en regelgeving.'
+    ],
+    privacyContact: 'Heb je vragen over ons privacybeleid? Neem dan contact op via privacy@ticketwave.com.',
+    buyticket: 'Koop Ticket',
+    learnmore: 'Meer informatie',
   },
 
 }

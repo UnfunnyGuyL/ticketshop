@@ -87,4 +87,42 @@ export default {
 .toscontent li {
   margin-bottom: 10px;
 }
+.tos-container {
+  background: #fff;
+  color: #23272f;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(44,62,80,0.10);
+  padding: 36px 32px 32px 32px;
+  margin: 40px auto 32px auto;
+  max-width: 700px;
+  text-align: left;
+  border: 1.5px solid #e0e7ff;
+}
+.tos-container h1 {
+  color: #203a43;
+  font-size: 2.1rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+  letter-spacing: 0.01em;
+}
+.tos-container h2 {
+  color: #0f2027;
+  font-size: 1.3rem;
+  margin-top: 28px;
+  margin-bottom: 10px;
+}
+.tos-container ul, .tos-container ol {
+  margin-left: 1.5em;
+  margin-bottom: 1em;
+}
+.tos-container p {
+  margin-bottom: 1em;
+  color: #23272f;
+}
+@media (max-width: 800px) {
+  .tos-container {
+    padding: 18px 8px 18px 8px;
+    max-width: 98vw;
+  }
+}
 </style>

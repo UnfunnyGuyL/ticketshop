@@ -18,7 +18,10 @@
           <h3>{{ event.title }}</h3>
           <p><strong>{{$t('date')}}:</strong> {{ event.date }}</p>
           <p><strong>{{$t('location')}}:</strong> {{ event.location }}</p>
-          <button>{{$t('buy')}}</button>
+          <div class="event-btn-row">
+            <button class="buyticket">{{$t('buyticket')}}</button>
+            <button class="learnmore">{{$t('learnmore') || 'Learn More'}}</button>
+          </div>
         </div>
       </div>
     </section>
@@ -56,6 +59,20 @@ export default {
   color: white;
   text-align: center;
   padding: 20px;
+}
+.herocontent h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: #fff;
+  text-shadow: 0 4px 24px rgba(44,62,80,0.18), 0 1px 0 #203a43;
+  margin-bottom: 18px;
+}
+.herocontent p {
+  font-size: 1.3rem;
+  color: #e0e7ff;
+  margin-bottom: 18px;
+  text-shadow: 0 2px 8px rgba(44,62,80,0.10);
 }
 .hero-content {
   max-width: 600px;
@@ -103,5 +120,40 @@ export default {
 }
 .event-card button:hover {
   background: #45a049;
+}
+
+
+.event-btn-row {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  margin-top: 10px;
+  justify-content: flex-start;
+}
+.buyticket, .learnmore {
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.06);
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  transition: background 0.18s;
+  display: inline-block;
+}
+.buyticket {
+  background: #4caf50;
+  color: #fff;
+}
+.buyticket:hover {
+  background: #388e3c;
+}
+.learnmore {
+  background: #ff9800;
+  color: #fff;
+}
+.learnmore:hover {
+  background: #e65100;
 }
 </style>

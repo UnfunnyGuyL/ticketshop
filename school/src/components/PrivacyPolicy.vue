@@ -5,28 +5,25 @@
       <img src="https://cdn-icons-png.flaticon.com/512/942/942748.png" alt="Privacy Icon" />
     </div>
     <div class="privacycontent">
-      <h1>Privacy Policy</h1>
-      <p>
-        Your privacy is important to us. This page explains how TicketWave collects, uses, and protects your personal information when you use our platform.
-      </p>
+      <h1>{{ $t('privacyTitle') }}</h1>
+      <p>{{ $t('privacyIntro') }}</p>
       <ul>
-        <li>We only collect information necessary for ticket purchases and account management.</li>
-        <li>Your data is never sold or shared with third parties for marketing purposes.</li>
-        <li>All payment transactions are processed securely using industry-standard encryption.</li>
-        <li>You can request to view, update, or delete your personal data at any time by contacting our support team.</li>
-        <li>We use cookies to enhance your experience and for essential site functionality.</li>
-        <li>Our privacy practices comply with applicable laws and regulations.</li>
+        <li v-for="(item, idx) in privacyList" :key="idx">{{ item }}</li>
       </ul>
-      <p>
-        If you have questions about our privacy policy, please contact us at privacy@ticketwave.com.
-      </p>
+      <p>{{ $t('privacyContact') }}</p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'PrivacyPolicy'
+  name: 'PrivacyPolicy',
+  computed: {
+    privacyList() {
+      // Ensure we get the array, not a string
+      return this.$i18n.messages[this.$i18n.locale].privacyList || [];
+    }
+  }
 }
 </script>
 
@@ -85,10 +82,12 @@ export default {
   list-style: disc inside;
   text-align: left;
   margin: 0 auto 18px auto;
-  max-width: 480px;
+  max-width: 100%;
   color: #ff9800;
   font-size: 1rem;
   padding-left: 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 .privacycontent li {
   margin-bottom: 10px;
