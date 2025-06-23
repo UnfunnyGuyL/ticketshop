@@ -23,10 +23,10 @@
             <img src="https://cdn-icons-png.flaticon.com/512/681/681494.png" alt="Login" width="36" height="36" style="filter: brightness(0) invert(1);" />
           </a>
           <div v-if="showDropdown" class="login-dropdown">
-            <router-link v-if="!isLoggedIn" to="/login" class="dropdown-item">Login</router-link>
-            <router-link v-if="!isLoggedIn" to="/register" class="dropdown-item">Register</router-link>
-            <router-link v-if="isLoggedIn" to="/admin" class="dropdown-item">Admin Panel</router-link>
-            <button v-if="isLoggedIn" class="dropdown-item" @click="logout">Log out</button>
+            <router-link v-if="!isLoggedIn" to="/login" class="dropdown-item">{{$t('login')}}</router-link>
+            <router-link v-if="!isLoggedIn" to="/register" class="dropdown-item">{{$t('register')}}</router-link>
+            <router-link v-if="isLoggedIn" to="/admin" class="dropdown-item">{{$t('adminPanel')}}</router-link>
+            <button v-if="isLoggedIn" class="dropdown-item" @click="logout">{{$t('logout')}}</button>
           </div>
         </li>
       </ul>
@@ -37,9 +37,9 @@
     <footer class="footer">
       <div class="footerrow">
         <div class="footerleft">
-          <router-link to="/about" class="footer-link">About Us</router-link>
-          <router-link to="/tos" class="footer-link" style="margin-left: 18px;">TOS</router-link>
-          <router-link to="/privacy" class="footer-link" style="margin-left: 18px;">Privacy Policy</router-link>
+          <router-link to="/about" class="footer-link">{{$t('about')}}</router-link>
+          <router-link to="/tos" class="footer-link" style="margin-left: 18px;">{{$t('tosTitle')}}</router-link>
+          <router-link to="/privacy" class="footer-link" style="margin-left: 18px;">{{$t('privacyTitle')}}</router-link>
         </div>
         <div class="footerright">
           <div class="langswitch">
@@ -48,7 +48,7 @@
           </div>
         </div>
       </div>
-      <p>&copy; 2025 TicketWave. All rights reserved.</p>
+      <p>{{$t('copyright')}}</p>
     </footer>
   </div>
 </template>

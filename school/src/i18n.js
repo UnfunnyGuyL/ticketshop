@@ -72,6 +72,9 @@ const messages = {
     registerSuccess: 'Registration successful! You can now log in.',
     registerFailed: 'Registration failed',
     adminForbidden: "youre not allowed here",
+    adminPanel: 'Admin Panel',
+    logout: 'Log out',
+    copyright: '© 2025 TicketWave. All rights reserved.',
   },
   nl: {
     title: 'Aankomende Evenementen',
@@ -144,6 +147,9 @@ const messages = {
     registerSuccess: 'Registratie gelukt! Je kunt nu inloggen.',
     registerFailed: 'Registratie mislukt',
     adminForbidden: 'je bent hier niet toegestaan',
+    adminPanel: 'Adminpaneel',
+    logout: 'Uitloggen',
+    copyright: '© 2025 TicketWave. Alle rechten voorbehouden.',
   },
 
 }
